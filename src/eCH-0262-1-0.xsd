@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Datum				Version				Autor
+*********************************************
+2023-05-01			Entwurf zur Eingabe bei eCH			Stl
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0262="http://www.ech.ch/xmlns/eCH-0262/1" xmlns:eCH-0097="http://www.ech.ch/xmlns/eCH-0097/6" xmlns:eCH-0261="http://www.ech.ch/xmlns/eCH-0261/1" xmlns:eCH-0263="http://www.ech.ch/xmlns/eCH-0263/1" targetNamespace="http://www.ech.ch/xmlns/eCH-0262/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:annotation>
+		<xs:documentation xml:lang="de">Agrardaten - Hofdaten und Anwendungen Betriebsmittel</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0097/6" schemaLocation="http://www.ech.ch/xmlns/eCH-0097/6/eCH-0097-6-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0261/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0261/1/eCH-0261-1-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0263/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0263/1/eCH-0263-1-0.xsd"/>
+	<!--Hauptdatentypen-->
+	<xs:complexType name="husbandryType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Tierhaltung</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="eCH-0261:identifierType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="eCH-0261:descriptorType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Beschreibung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="husbandryKind">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Tierhaltungsart</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="STALL">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Stall</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="PASTURE">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Wiese</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="stableSystem" type="eCH-0263:stableSystemType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Stallsystem</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="permittedForAnimal" type="eCH-0261:identifierType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Erlaubte Tierkategorien
+Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-0266 definiert wird.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="storageType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Lager</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="eCH-0261:identifierType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="eCH-0261:descriptorType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Beschreibung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="storageType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Lagertyp</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="SLURRY_TANK">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Güllelager</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="MANURE_PIT">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Mistgrube</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="volumeInM3">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Volumen (m3)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="depthInM" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Tiefe (m)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="cover">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Abdeckung</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="NONE">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Keine</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="SOLID">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Fest (Beton, Holz)</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="FOIL">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Folie/Folienzelt</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="FLOATING_FOIL">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Schwimmfolie</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="location" type="eCH-0097:namedOrganisationIdType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Standort (BUR-Nummer)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="plantProtectionProductApplicationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Anwendung Pflanzenschutzmittel</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="eCH-0261:identifierType" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateOfApplication" type="xs:date">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Datum der Anwendung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="product" type="eCH-0261:identifierType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">ID des angewendeten PSM-Produkts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="quantity">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Menge des Produkts, die angewendet wurde.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="unit" type="eCH-0261:unitType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Zugehörige Einheit der angewendeten Menge.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unitName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Genauere Bezeichnung der Einheit</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="targetSize">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Grösse/Anzahl der Fläche, Kulturen, Stü-cke etc., auf welcher das Produkt ange-wendet wurde.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="targetUnit" type="eCH-0261:unitType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Zugehörige Einheit für die Fläche, Kulturen, Stücke etc., auf welcher das Produkt angewendet wurde.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="targetUnitName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Genauere Bezeichnung der Einheit, wenn für «denominatorUnit» den Wert «pc» (Stück) angegeben wurde.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="location" type="eCH-0097:namedOrganisationIdType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Standort (BUR-Nummer) des Betriebs auf welchem die Anwendung stattfindet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="crop" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) einer botanischen Kultur, welche durch «botanicalPlantType» aus eCH-0265 defi-niert wird</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="cultivationType" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) einer Nutzungsart, welche durch «cultivationTypeType» aus eCH-0265 definiert wird</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="noCulture" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, wel-ches durch «noCultureObjectsType» definiert ist</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="applicationArea" type="eCH-0261:identifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">ID einer georeferenzierten Anwendungsfläche</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="appliedBy" type="eCH-0097:uidStructureType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="applicationTechnology" type="eCH-0262:applicationTechnologyType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Verwendete Anwendungstechnologie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="comment" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Kommentar</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="hofRecApplicationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Anwendung Hof- und Recyclingdünger</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="eCH-0261:identifierType" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateOfApplication" type="xs:date">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Datum der Anwendung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="product" type="eCH-0261:identifierType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">ID eines HofRec-Produkts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="quantity">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Menge des Produkts, die angewendet wurde.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="unit" type="eCH-0261:unitType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Zugehörige Einheit der angewendeten Menge. Eingeschränkt auf «l», «kg».</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="target">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Grösse/Anzahl der Fläche auf welcher das Produkt angewendet wurde.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="targetUnit" type="eCH-0261:unitType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Zugehörige Einheit für die Fläche, auf welcher das Produkt angewendet wurde. Eingeschränkt auf «m2».</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="location" type="eCH-0097:namedOrganisationIdType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Standort (BUR-Nummer) des Betriebs auf welchem die Anwendung stattfindet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:element name="crop" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) einer botanischen Kultur, welche durch «botanicalPlantType» aus eCH-0265 definiert wird</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="cultivationType" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) einer Nutzungsart, welche durch «cultivationTypeType» aus eCH-0265 definiert wird</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="noCulture" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, wel-ches durch «noCultureObjectsType» definiert ist</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="applicationArea" type="eCH-0261:identifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">ID einer georeferenzierten Anwendungsfläche</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="appliedBy" type="eCH-0097:uidStructureType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="applicationTechnology" type="eCH-0262:applicationTechnologyType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Verwendete Anwendungstechnologie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="comment" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Kommentar</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="fertiliserApplicationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Anwendung Dünger</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="eCH-0261:identifierType" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateOfApplication" type="xs:date">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Datum der Anwendung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="product" type="eCH-0261:identifierType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">ID eines Dünger-Produkts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="quantity">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Menge des Produkts, die angewendet wurde.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="unit" type="eCH-0261:unitType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Zugehörige Einheit der angewendeten Menge.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unitName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Genauere Bezeichnung der Einheit</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="targetSize">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Grösse/Anzahl der Fläche, Kulturen, Stücke etc., auf welcher das Produkt ange-wendet wurde.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="targetUnit" type="eCH-0261:unitType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Zugehörige Einheit für die Fläche, Kulturen, Stücke etc., auf welcher das Produkt angewendet wurde.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="targetUnitName">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Genauere Bezeichnung der Einheit, wenn für «denominatorUnit» den Wert «pc» (Stück) angegeben wurde.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="location" type="eCH-0097:namedOrganisationIdType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Standort (BUR-Nummer)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:element name="crop" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) einer botanischen Kultur, welche durch «botanicalPlantType» aus eCH-0265 definiert wird</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="cultivationType" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) einer Nutzungsart, welche durch «cultivationTypeType» aus eCH-0265 definiert wird</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="noCulture" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, wel-ches durch «noCultureObjectsType» definiert ist</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="applicationArea" type="eCH-0261:identifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">ID einer georeferenzierten Anwendungs-fläche</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="appliedBy" type="eCH-0097:uidStructureType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="applicationTechnology" type="eCH-0262:applicationTechnologyType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Verwendete Anwendungstechnologie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="comment" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Kommentar</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="feedstuffApplicationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Anwendung Futtermittel</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="eCH-0261:identifierType" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateOfApplication" type="xs:date">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Datum der Anwendung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="product" type="eCH-0261:identifierType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">ID eines Dünger-Produkts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="quantity">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Menge des Produkts, die angewendet wurde.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="unit" type="eCH-0261:unitType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Zugehörige Einheit der angewendeten Menge.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unitName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Genauere Bezeichnung der Einheit</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="targetSize" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Anzahl Tiere, denen das Futtermittel verfüttert wurde.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="location" type="eCH-0097:namedOrganisationIdType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Standort (BUR-Nummer)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:element name="animalGroup" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) einer Tiergruppe</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="animalCategoryPRIF" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) eines Tieres aus der GRUD-Liste</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="taxonomyAnimal" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) eines Tieres gemäss einer Taxonomie</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="individualAnimal" type="eCH-0261:identifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="de">Referenz (ID) eines Einzeltieres</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="appliedBy" type="eCH-0097:uidStructureType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="applicationTechnology" type="eCH-0262:applicationTechnologyType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Verwendete Anwendungstechnologie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="comment" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Kommentar</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="applicationTechnologyType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Anwendungstechnologie</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="eCH-0261:identifierType" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="description" type="eCH-0261:descriptorType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Beschreibung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="productFamily" type="eCH-0263:productFamilyType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Gibt an, für welche Produktfamilien diese Anwendungstechnologie in Frage kommt</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="productShipmentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Lieferung eines Produkts</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="eCH-0261:identifierType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="product">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">ID des gelieferten Produkts.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="shippedFrom" type="eCH-0097:namedOrganisationIdType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">BUR-Nummer des abgebenden Betriebs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shippedTo" type="eCH-0097:namedOrganisationIdType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">BUR-Nummer des abnehmenden Betriebs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="quantity" type="xs:nonNegativeInteger">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Menge</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unit" type="eCH-0261:unitType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Einheit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shipmentDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Lieferdatum</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="comment" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Bemerkung</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="productShipmentStatus" type="eCH-0262:productShipmentStatusType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Lieferstatus</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lastStatusDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Letztes Datum, an welchem der Status aktualisiert wurde</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="productShipmentStatusType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Lieferstatus</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="item" type="eCH-0261:enumeratedItemType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Root-Element-->
+	<xs:element name="root">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="resourceApplication" type="eCH-0262:plantProtectionProductApplicationType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
