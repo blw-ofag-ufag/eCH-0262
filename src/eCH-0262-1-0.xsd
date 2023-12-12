@@ -53,9 +53,7 @@ Datum				Version				Autor
 			</xs:element>
 			<xs:element name="permittedForAnimal" type="eCH-0261:identifierType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Erlaubte Tierkategorien
-Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-0266 definiert wird.
-</xs:documentation>
+					<xs:documentation xml:lang="de">Erlaubte Tierkategorien Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-0266 definiert wird.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
