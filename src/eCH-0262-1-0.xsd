@@ -12,7 +12,7 @@ Datum				Version				Autor
 	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0261/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0261/1/eCH-0261-1-0.xsd"/>
 	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0263/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0263/1/eCH-0263-1-0.xsd"/>
 	<!--Hauptdatentypen-->
-	<xs:complexType name="husbandryType">
+	<xs:complexType name="husbandryFormType">
 		<xs:annotation>
 			<xs:documentation xml:lang="de">Tierhaltung</xs:documentation>
 		</xs:annotation>
