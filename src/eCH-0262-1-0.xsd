@@ -4,15 +4,15 @@ Datum				Version				Autor
 *********************************************
 2023-05-01			Entwurf zur Eingabe bei eCH			Stl
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0262="http://www.ech.ch/xmlns/eCH-0262/1" xmlns:eCH-0097="http://www.ech.ch/xmlns/eCH-0097/6" xmlns:eCH-0261="http://www.ech.ch/xmlns/eCH-0261/1" xmlns:eCH-0263="http://www.ech.ch/xmlns/eCH-0263/1" targetNamespace="http://www.ech.ch/xmlns/eCH-0262/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eCH-0262="http://www.ech.ch/xmlns/eCH-0262/1" xmlns:eCH-0108="http://www.ech.ch/xmlns/eCH-0108/7" xmlns:eCH-0261="http://www.ech.ch/xmlns/eCH-0261/1" xmlns:eCH-0263="http://www.ech.ch/xmlns/eCH-0263/1" targetNamespace="http://www.ech.ch/xmlns/eCH-0262/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
 	<xs:annotation>
 		<xs:documentation xml:lang="de">Agrardaten - Hofdaten und Anwendungen Betriebsmittel</xs:documentation>
 	</xs:annotation>
-	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0097/6" schemaLocation="http://www.ech.ch/xmlns/eCH-0097/6/eCH-0097-6-0.xsd"/>
-	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0261/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0261/1/eCH-0261-1-0.xsd"/>
-	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0263/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0263/1/eCH-0263-1-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0108/7" schemaLocation="./eCH-0108-7-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0261/1" schemaLocation="../../eCH-0261/src/eCH-0261-1-0.xsd"/>
+	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0263/1" schemaLocation="../../eCH-0263/src/eCH-0263-1-0.xsd"/>
 	<!--Hauptdatentypen-->
-	<xs:complexType name="husbandryType">
+	<xs:complexType name="husbandryFormType">
 		<xs:annotation>
 			<xs:documentation xml:lang="de">Tierhaltung</xs:documentation>
 		</xs:annotation>
@@ -94,25 +94,55 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="volumeInM3">
+			<xs:element name="volume">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Volumen (m3)</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:decimal">
-						<xs:fractionDigits value="3"/>
-					</xs:restriction>
-				</xs:simpleType>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="eCH-0262:measurementType">
+							<xs:sequence>
+								<xs:element name="value">
+									<xs:simpleType>
+										<xs:restriction base="xs:decimal"/>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unit">
+									<xs:simpleType>
+										<xs:restriction base="eCH-0261:unitType">
+											<xs:enumeration value="m3"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
 			</xs:element>
-			<xs:element name="depthInM" minOccurs="0">
+			<xs:element name="depth" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Tiefe (m)</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:decimal">
-						<xs:fractionDigits value="3"/>
-					</xs:restriction>
-				</xs:simpleType>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="eCH-0262:measurementType">
+							<xs:sequence>
+								<xs:element name="value">
+									<xs:simpleType>
+										<xs:restriction base="xs:decimal"/>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unit">
+									<xs:simpleType>
+										<xs:restriction base="eCH-0261:unitType">
+											<xs:enumeration value="m"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
 			</xs:element>
 			<xs:element name="cover">
 				<xs:annotation>
@@ -143,7 +173,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="location" type="eCH-0097:namedOrganisationIdType">
+			<xs:element name="location" type="eCH-0108:localIdType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Standort (BUR-Nummer)</xs:documentation>
 				</xs:annotation>
@@ -155,9 +185,14 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 			<xs:documentation xml:lang="de">Anwendung Pflanzenschutzmittel</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="eCH-0261:identifierType" maxOccurs="2">
+			<xs:element name="id" type="eCH-0261:identifierType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="alternateId" type="eCH-0261:identifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Alternativer Identifikator</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="dateOfApplication" type="xs:date">
@@ -172,55 +207,73 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 			</xs:element>
 			<xs:element name="quantity">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Menge des Produkts, die angewendet wurde.</xs:documentation>
+					<xs:documentation xml:lang="de">Menge mit zugehörender Einheit des verwendeten Produkts.</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:decimal">
-						<xs:fractionDigits value="3"/>
-					</xs:restriction>
-				</xs:simpleType>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="eCH-0262:measurementType">
+							<xs:sequence>
+								<xs:element name="value">
+									<xs:simpleType>
+										<xs:restriction base="xs:decimal"/>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unit">
+									<xs:simpleType>
+										<xs:restriction base="eCH-0261:unitType">
+											<xs:enumeration value="m3"/>
+											<xs:enumeration value="kg"/>
+											<xs:enumeration value="pc"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unitName" minOccurs="0">
+									<xs:simpleType>
+										<xs:restriction base="xs:token">
+											<xs:maxLength value="50"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
 			</xs:element>
-			<xs:element name="unit" type="eCH-0261:unitType">
+			<xs:element name="target">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Zugehörige Einheit der angewendeten Menge.</xs:documentation>
+					<xs:documentation xml:lang="de">Grösse bzw. Anzahl der Fläche, Kulturen, Stücke etc., auf welcher das Produkt angewendet wurde mit zugehöriger Einheit.</xs:documentation>
 				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="eCH-0262:measurementType">
+							<xs:sequence>
+								<xs:element name="value">
+									<xs:simpleType>
+										<xs:restriction base="xs:decimal"/>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unit">
+									<xs:simpleType>
+										<xs:restriction base="eCH-0261:unitType">
+											<xs:enumeration value="m2"/>
+											<xs:enumeration value="m3"/>
+											<xs:enumeration value="pc"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unitName" minOccurs="0">
+									<xs:simpleType>
+										<xs:restriction base="xs:token">
+											<xs:maxLength value="50"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
 			</xs:element>
-			<xs:element name="unitName" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Genauere Bezeichnung der Einheit</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:maxLength value="50"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="targetSize">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Grösse/Anzahl der Fläche, Kulturen, Stü-cke etc., auf welcher das Produkt ange-wendet wurde.</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:decimal">
-						<xs:fractionDigits value="3"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="targetUnit" type="eCH-0261:unitType">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Zugehörige Einheit für die Fläche, Kulturen, Stücke etc., auf welcher das Produkt angewendet wurde.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="targetUnitName" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Genauere Bezeichnung der Einheit, wenn für «denominatorUnit» den Wert «pc» (Stück) angegeben wurde.</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:maxLength value="50"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="location" type="eCH-0097:namedOrganisationIdType">
+			<xs:element name="location" type="eCH-0108:localIdType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Standort (BUR-Nummer) des Betriebs auf welchem die Anwendung stattfindet.</xs:documentation>
 				</xs:annotation>
@@ -247,7 +300,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					<xs:documentation xml:lang="de">ID einer georeferenzierten Anwendungsfläche</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="appliedBy" type="eCH-0097:uidStructureType">
+			<xs:element name="appliedBy" type="eCH-0108:uidType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
 				</xs:annotation>
@@ -291,35 +344,63 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 			</xs:element>
 			<xs:element name="quantity">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Menge des Produkts, die angewendet wurde.</xs:documentation>
+					<xs:documentation xml:lang="de">Menge mit zugehörender Einheit des verwendeten Produkts.</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:decimal">
-						<xs:fractionDigits value="3"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="unit" type="eCH-0261:unitType">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Zugehörige Einheit der angewendeten Menge. Eingeschränkt auf «l», «kg».</xs:documentation>
-				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="eCH-0262:measurementType">
+							<xs:sequence>
+								<xs:element name="value">
+									<xs:simpleType>
+										<xs:restriction base="xs:decimal"/>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unit">
+									<xs:simpleType>
+										<xs:restriction base="eCH-0261:unitType">
+											<xs:enumeration value="m3"/>
+											<xs:enumeration value="kg"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unitName" minOccurs="0">
+									<xs:simpleType>
+										<xs:restriction base="xs:token">
+											<xs:maxLength value="50"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
 			</xs:element>
 			<xs:element name="target">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Grösse/Anzahl der Fläche auf welcher das Produkt angewendet wurde.</xs:documentation>
+					<xs:documentation xml:lang="de">Grösse der Fläche, auf welcher das Produkt angewendet wurde mit zugehöriger Einheit.</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:decimal">
-						<xs:fractionDigits value="3"/>
-					</xs:restriction>
-				</xs:simpleType>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="eCH-0262:measurementType">
+							<xs:sequence>
+								<xs:element name="value">
+									<xs:simpleType>
+										<xs:restriction base="xs:decimal"/>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unit">
+									<xs:simpleType>
+										<xs:restriction base="eCH-0261:unitType">
+											<xs:enumeration value="m2"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
 			</xs:element>
-			<xs:element name="targetUnit" type="eCH-0261:unitType">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Zugehörige Einheit für die Fläche, auf welcher das Produkt angewendet wurde. Eingeschränkt auf «m2».</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="location" type="eCH-0097:namedOrganisationIdType">
+			<xs:element name="location" type="eCH-0108:localIdType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Standort (BUR-Nummer) des Betriebs auf welchem die Anwendung stattfindet.</xs:documentation>
 				</xs:annotation>
@@ -346,7 +427,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					<xs:documentation xml:lang="de">ID einer georeferenzierten Anwendungsfläche</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="appliedBy" type="eCH-0097:uidStructureType">
+			<xs:element name="appliedBy" type="eCH-0108:uidType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
 				</xs:annotation>
@@ -390,55 +471,72 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 			</xs:element>
 			<xs:element name="quantity">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Menge des Produkts, die angewendet wurde.</xs:documentation>
+					<xs:documentation xml:lang="de">Menge mit zugehörender Einheit des verwendeten Produkts.</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:decimal">
-						<xs:fractionDigits value="3"/>
-					</xs:restriction>
-				</xs:simpleType>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="eCH-0262:measurementType">
+							<xs:sequence>
+								<xs:element name="value">
+									<xs:simpleType>
+										<xs:restriction base="xs:decimal"/>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unit">
+									<xs:simpleType>
+										<xs:restriction base="eCH-0261:unitType">
+											<xs:enumeration value="m3"/>
+											<xs:enumeration value="kg"/>
+											<xs:enumeration value="pc"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unitName" minOccurs="0">
+									<xs:simpleType>
+										<xs:restriction base="xs:token">
+											<xs:maxLength value="50"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
 			</xs:element>
-			<xs:element name="unit" type="eCH-0261:unitType">
+			<xs:element name="target">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Zugehörige Einheit der angewendeten Menge.</xs:documentation>
+					<xs:documentation xml:lang="de">Grösse bzw. Anzahl der Fläche, Kulturen, Stücke etc., auf welcher das Produkt angewendet wurde mit zugehöriger Einheit.</xs:documentation>
 				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="eCH-0262:measurementType">
+							<xs:sequence>
+								<xs:element name="value">
+									<xs:simpleType>
+										<xs:restriction base="xs:decimal"/>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unit">
+									<xs:simpleType>
+										<xs:restriction base="eCH-0261:unitType">
+											<xs:enumeration value="m2"/>
+											<xs:enumeration value="pc"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unitName" minOccurs="0">
+									<xs:simpleType>
+										<xs:restriction base="xs:token">
+											<xs:maxLength value="50"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
 			</xs:element>
-			<xs:element name="unitName" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Genauere Bezeichnung der Einheit</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:maxLength value="50"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="targetSize">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Grösse/Anzahl der Fläche, Kulturen, Stücke etc., auf welcher das Produkt ange-wendet wurde.</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:decimal">
-						<xs:fractionDigits value="3"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="targetUnit" type="eCH-0261:unitType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Zugehörige Einheit für die Fläche, Kulturen, Stücke etc., auf welcher das Produkt angewendet wurde.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="targetUnitName">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Genauere Bezeichnung der Einheit, wenn für «denominatorUnit» den Wert «pc» (Stück) angegeben wurde.</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:maxLength value="50"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="location" type="eCH-0097:namedOrganisationIdType">
+			<xs:element name="location" type="eCH-0108:localIdType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Standort (BUR-Nummer)</xs:documentation>
 				</xs:annotation>
@@ -465,7 +563,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					<xs:documentation xml:lang="de">ID einer georeferenzierten Anwendungs-fläche</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="appliedBy" type="eCH-0097:uidStructureType">
+			<xs:element name="appliedBy" type="eCH-0108:uidType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
 				</xs:annotation>
@@ -509,40 +607,64 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 			</xs:element>
 			<xs:element name="quantity">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Menge des Produkts, die angewendet wurde.</xs:documentation>
+					<xs:documentation xml:lang="de">Menge mit zugehörender Einheit des verwendeten Produkts.</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:decimal">
-						<xs:fractionDigits value="3"/>
-					</xs:restriction>
-				</xs:simpleType>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="eCH-0262:measurementType">
+							<xs:sequence>
+								<xs:element name="value">
+									<xs:simpleType>
+										<xs:restriction base="xs:decimal"/>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unit">
+									<xs:simpleType>
+										<xs:restriction base="eCH-0261:unitType">
+											<xs:enumeration value="m3"/>
+											<xs:enumeration value="kg"/>
+											<xs:enumeration value="pc"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unitName" minOccurs="0">
+									<xs:simpleType>
+										<xs:restriction base="xs:token">
+											<xs:maxLength value="50"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
 			</xs:element>
-			<xs:element name="unit" type="eCH-0261:unitType">
+			<xs:element name="target">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Zugehörige Einheit der angewendeten Menge.</xs:documentation>
+					<xs:documentation xml:lang="de">Anzahl Tiere, denen das Futtermittel verfüttert wurde. </xs:documentation>
 				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="eCH-0262:measurementType">
+							<xs:sequence>
+								<xs:element name="value">
+									<xs:simpleType>
+										<xs:restriction base="xs:decimal"/>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unit">
+									<xs:simpleType>
+										<xs:restriction base="eCH-0261:unitType">
+											<xs:enumeration value="pc"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
 			</xs:element>
-			<xs:element name="unitName" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Genauere Bezeichnung der Einheit</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:maxLength value="50"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="targetSize" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Anzahl Tiere, denen das Futtermittel verfüttert wurde.</xs:documentation>
-				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:decimal">
-						<xs:fractionDigits value="3"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="location" type="eCH-0097:namedOrganisationIdType">
+			<xs:element name="location" type="eCH-0108:localIdType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Standort (BUR-Nummer)</xs:documentation>
 				</xs:annotation>
@@ -569,7 +691,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
-			<xs:element name="appliedBy" type="eCH-0097:uidStructureType">
+			<xs:element name="appliedBy" type="eCH-0108:uidType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
 				</xs:annotation>
@@ -633,25 +755,49 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="shippedFrom" type="eCH-0097:namedOrganisationIdType">
+			<xs:element name="shippedFrom" type="eCH-0108:localIdType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">BUR-Nummer des abgebenden Betriebs</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="shippedTo" type="eCH-0097:namedOrganisationIdType">
+			<xs:element name="shippedTo" type="eCH-0108:localIdType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">BUR-Nummer des abnehmenden Betriebs</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="quantity" type="xs:nonNegativeInteger">
+			<xs:element name="quantity">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Menge</xs:documentation>
+					<xs:documentation xml:lang="de">Menge mit zugehörender Einheit.</xs:documentation>
 				</xs:annotation>
-			</xs:element>
-			<xs:element name="unit" type="eCH-0261:unitType">
-				<xs:annotation>
-					<xs:documentation xml:lang="de">Einheit</xs:documentation>
-				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="eCH-0262:measurementType">
+							<xs:sequence>
+								<xs:element name="value">
+									<xs:simpleType>
+										<xs:restriction base="xs:decimal"/>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unit">
+									<xs:simpleType>
+										<xs:restriction base="eCH-0261:unitType">
+											<xs:enumeration value="m3"/>
+											<xs:enumeration value="kg"/>
+											<xs:enumeration value="pc"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="unitName" minOccurs="0">
+									<xs:simpleType>
+										<xs:restriction base="xs:token">
+											<xs:maxLength value="50"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
 			</xs:element>
 			<xs:element name="shipmentDate" type="xs:date">
 				<xs:annotation>
@@ -686,6 +832,42 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="item" type="eCH-0261:enumeratedItemType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--MeasurementType redefinition from eCH-0261-->
+	<xs:complexType name="measurementType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Messung mit Wert und Einheit</xs:documentation>
+			<xs:documentation xml:lang="fr">Mesure avec valeur et unité</xs:documentation>
+			<xs:documentation xml:lang="en">Measurement with value and unit</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="value" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Menge, Wert</xs:documentation>
+					<xs:documentation xml:lang="fr">Quantité, valeur</xs:documentation>
+					<xs:documentation xml:lang="en">Quantity, value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unit" type="eCH-0261:unitType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Zugehörige Einheit</xs:documentation>
+					<xs:documentation xml:lang="fr">Unité associée</xs:documentation>
+					<xs:documentation xml:lang="en">Associated unit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="unitName" type="xs:token" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Genauere Bezeichnung der Einheit, wenn im Feld «unit» die Einheit «pc» (Stück) angegeben wurde.</xs:documentation>
+					<xs:documentation xml:lang="fr">Désignation plus précise de l'unité, si l'unité "pc" (pièce) a été indiquée dans le champ "unit".</xs:documentation>
+					<xs:documentation xml:lang="en">More precise designation of the unit if the unit "pc" (piece) was specified in the "unit" field.</xs:documentation>
+				</xs:annotation>
+				<!--				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>-->
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<!--Root-Element-->
