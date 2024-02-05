@@ -715,14 +715,19 @@ Datum				Version				Autor
 			<xs:documentation xml:lang="de">Verwendungstechnologie</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="eCH-0261:identifierType" maxOccurs="2">
+			<xs:element name="id" type="eCH-0261:identifierType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="alternateId" type="eCH-0261:identifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Alternativer Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="descriptor" type="eCH-0261:descriptorType">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Beschreibung</xs:documentation>
+					<xs:documentation xml:lang="de">Bezeichnung</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="productFamily" type="eCH-0263:productFamilyType" maxOccurs="unbounded">
