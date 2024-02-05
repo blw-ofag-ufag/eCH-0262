@@ -22,7 +22,7 @@ Datum				Version				Autor
 					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="description" type="eCH-0261:descriptorType">
+			<xs:element name="descriptor" type="eCH-0261:descriptorType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Beschreibung</xs:documentation>
 				</xs:annotation>
@@ -69,7 +69,7 @@ Datum				Version				Autor
 					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="description" type="eCH-0261:descriptorType">
+			<xs:element name="descriptor" type="eCH-0261:descriptorType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Beschreibung</xs:documentation>
 				</xs:annotation>
@@ -143,34 +143,10 @@ Datum				Version				Autor
 					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="cover">
+			<xs:element name="cover" type="eCH-0262:coverType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Abdeckung</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:enumeration value="NONE">
-							<xs:annotation>
-								<xs:documentation xml:lang="de">Keine</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="SOLID">
-							<xs:annotation>
-								<xs:documentation xml:lang="de">Fest (Beton, Holz)</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="FOIL">
-							<xs:annotation>
-								<xs:documentation xml:lang="de">Folie/Folienzelt</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-						<xs:enumeration value="FLOATING_FOIL">
-							<xs:annotation>
-								<xs:documentation xml:lang="de">Schwimmfolie</xs:documentation>
-							</xs:annotation>
-						</xs:enumeration>
-					</xs:restriction>
-				</xs:simpleType>
 			</xs:element>
 			<xs:element name="location" type="eCH-0108:localIdType">
 				<xs:annotation>
@@ -284,7 +260,7 @@ Datum				Version				Autor
 							<xs:documentation xml:lang="de">Referenz (ID) einer botanischen Kultur, welche durch «botanicalPlantType» aus eCH-0265 definiert wird</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="variety" type="eCH-0261:enumeratedItemType" minOccurs="0">
+					<xs:element name="variety" type="eCH-0261:identifierType" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation xml:lang="de">Optionale Angabe von Sorten</xs:documentation>
 						</xs:annotation>
@@ -328,7 +304,7 @@ Datum				Version				Autor
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="hofRecUtilisationType">
+	<xs:complexType name="manureRecyclingUtilisationType">
 		<xs:annotation>
 			<xs:documentation xml:lang="de">Verwendung Hof- und Recyclingdünger</xs:documentation>
 		</xs:annotation>
@@ -744,7 +720,7 @@ Datum				Version				Autor
 					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="description" type="eCH-0261:descriptorType">
+			<xs:element name="descriptor" type="eCH-0261:descriptorType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Beschreibung</xs:documentation>
 				</xs:annotation>
@@ -865,6 +841,14 @@ Datum				Version				Autor
 		<xs:sequence>
 			<xs:element name="dateFrom" type="xs:date"/>
 			<xs:element name="dateTo" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="coverType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Liste Abdeckungen für Mist- oder Güllelager</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="item" type="eCH-0261:enumeratedItemType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!--MeasurementType redefinition from eCH-0261-->
