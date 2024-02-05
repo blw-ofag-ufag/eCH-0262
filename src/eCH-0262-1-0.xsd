@@ -54,7 +54,7 @@ Datum				Version				Autor
 			<xs:element name="permittedForAnimal" type="eCH-0261:identifierType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Erlaubte Tierkategorien
-Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-0266 definiert wird.
+Referenziert einen Code einer Spezies, welcher durch «zoologicalAnimalType» aus eCH-0266 definiert wird.
 </xs:documentation>
 				</xs:annotation>
 			</xs:element>
@@ -75,7 +75,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					<xs:documentation xml:lang="de">Beschreibung</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="storageType">
+			<xs:element name="storageKind">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Lagertyp</xs:documentation>
 				</xs:annotation>
@@ -195,7 +195,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					<xs:documentation xml:lang="de">Alternativer Identifikator</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="dateOfApplication" type="xs:date">
+			<xs:element name="dateOfApplication" type="eCH-0262:dateOfUtilisationType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Datum der Anwendung</xs:documentation>
 				</xs:annotation>
@@ -273,25 +273,32 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="location" type="eCH-0108:localIdType">
+			<xs:element name="locationOfUtilisation" type="eCH-0108:localIdType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Standort (BUR-Nummer) des Betriebs auf welchem die Anwendung stattfindet.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:choice>
-				<xs:element name="crop" type="eCH-0261:identifierType">
-					<xs:annotation>
-						<xs:documentation xml:lang="de">Referenz (ID) einer botanischen Kultur, welche durch «botanicalPlantType» aus eCH-0265 defi-niert wird</xs:documentation>
-					</xs:annotation>
-				</xs:element>
+				<xs:sequence>
+					<xs:element name="botanicalPlant" type="eCH-0261:identifierType">
+						<xs:annotation>
+							<xs:documentation xml:lang="de">Referenz (ID) einer botanischen Kultur, welche durch «botanicalPlantType» aus eCH-0265 definiert wird</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="variety" type="eCH-0261:enumeratedItemType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="de">Optionale Angabe von Sorten</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
 				<xs:element name="cultivationType" type="eCH-0261:identifierType">
 					<xs:annotation>
 						<xs:documentation xml:lang="de">Referenz (ID) einer Nutzungsart, welche durch «cultivationTypeType» aus eCH-0265 definiert wird</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="noCulture" type="eCH-0261:identifierType">
+				<xs:element name="nonCrop" type="eCH-0261:identifierType">
 					<xs:annotation>
-						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, wel-ches durch «noCultureObjectsType» definiert ist</xs:documentation>
+						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, wel-ches durch «nonCropObjectsType» definiert ist</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
@@ -305,7 +312,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="applicationTechnology" type="eCH-0262:applicationTechnologyType" minOccurs="0">
+			<xs:element name="utilisationTechnology" type="eCH-0262:utilisationTechnologyType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Verwendete Anwendungstechnologie</xs:documentation>
 				</xs:annotation>
@@ -322,19 +329,24 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="hofRecApplicationType">
+	<xs:complexType name="hofRecUtilisationType">
 		<xs:annotation>
-			<xs:documentation xml:lang="de">Anwendung Hof- und Recyclingdünger</xs:documentation>
+			<xs:documentation xml:lang="de">Verwendung Hof- und Recyclingdünger</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="eCH-0261:identifierType" maxOccurs="2">
+			<xs:element name="id" type="eCH-0261:identifierType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="dateOfApplication" type="xs:date">
+			<xs:element name="alternateId" type="eCH-0261:identifierType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Datum der Anwendung</xs:documentation>
+					<xs:documentation xml:lang="de">Alternativer Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateOfUtilisation" type="eCH-0262:dateOfUtilisationType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Datum der Verwendung</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="product" type="eCH-0261:identifierType">
@@ -363,7 +375,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 										</xs:restriction>
 									</xs:simpleType>
 								</xs:element>
-								<xs:element name="unitName" minOccurs="0">
+								<xs:element name="unitName">
 									<xs:simpleType>
 										<xs:restriction base="xs:token">
 											<xs:maxLength value="50"/>
@@ -377,7 +389,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 			</xs:element>
 			<xs:element name="target">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Grösse der Fläche, auf welcher das Produkt angewendet wurde mit zugehöriger Einheit.</xs:documentation>
+					<xs:documentation xml:lang="de">Grösse der Fläche, auf welcher das Produkt verwendet wurde mit zugehöriger Einheit.</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
 					<xs:complexContent>
@@ -400,13 +412,13 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="location" type="eCH-0108:localIdType">
+			<xs:element name="locationOfUtilisation" type="eCH-0108:localIdType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Standort (BUR-Nummer) des Betriebs auf welchem die Anwendung stattfindet.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:choice minOccurs="0">
-				<xs:element name="crop" type="eCH-0261:identifierType">
+				<xs:element name="botanicalPlant" type="eCH-0261:identifierType">
 					<xs:annotation>
 						<xs:documentation xml:lang="de">Referenz (ID) einer botanischen Kultur, welche durch «botanicalPlantType» aus eCH-0265 definiert wird</xs:documentation>
 					</xs:annotation>
@@ -416,9 +428,9 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 						<xs:documentation xml:lang="de">Referenz (ID) einer Nutzungsart, welche durch «cultivationTypeType» aus eCH-0265 definiert wird</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="noCulture" type="eCH-0261:identifierType">
+				<xs:element name="nonCrop" type="eCH-0261:identifierType">
 					<xs:annotation>
-						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, wel-ches durch «noCultureObjectsType» definiert ist</xs:documentation>
+						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, wel-ches durch «nonCropObjectsType» definiert ist</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
@@ -427,14 +439,14 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					<xs:documentation xml:lang="de">ID einer georeferenzierten Anwendungsfläche</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="appliedBy" type="eCH-0108:uidType">
+			<xs:element name="utilisedBy" type="eCH-0108:uidType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="applicationTechnology" type="eCH-0262:applicationTechnologyType" minOccurs="0">
+			<xs:element name="utilisationTechnology" type="eCH-0262:utilisationTechnologyType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Verwendete Anwendungstechnologie</xs:documentation>
+					<xs:documentation xml:lang="de">Verwendete Verwendungstechnologie</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="comment" minOccurs="0">
@@ -449,17 +461,22 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="fertiliserApplicationType">
+	<xs:complexType name="fertiliserUtilisationType">
 		<xs:annotation>
 			<xs:documentation xml:lang="de">Anwendung Dünger</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="eCH-0261:identifierType" maxOccurs="2">
+			<xs:element name="id" type="eCH-0261:identifierType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="dateOfApplication" type="xs:date">
+			<xs:element name="alternateId" type="eCH-0261:identifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Alternativer Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateOfUtilisation" type="eCH-0262:dateOfUtilisationType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Datum der Anwendung</xs:documentation>
 				</xs:annotation>
@@ -536,13 +553,13 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="location" type="eCH-0108:localIdType">
+			<xs:element name="locationOfUtilisation" type="eCH-0108:localIdType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Standort (BUR-Nummer)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:choice minOccurs="0">
-				<xs:element name="crop" type="eCH-0261:identifierType">
+				<xs:element name="botanicalPlant" type="eCH-0261:identifierType">
 					<xs:annotation>
 						<xs:documentation xml:lang="de">Referenz (ID) einer botanischen Kultur, welche durch «botanicalPlantType» aus eCH-0265 definiert wird</xs:documentation>
 					</xs:annotation>
@@ -552,25 +569,25 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 						<xs:documentation xml:lang="de">Referenz (ID) einer Nutzungsart, welche durch «cultivationTypeType» aus eCH-0265 definiert wird</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="noCulture" type="eCH-0261:identifierType">
+				<xs:element name="nonCrop" type="eCH-0261:identifierType">
 					<xs:annotation>
-						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, wel-ches durch «noCultureObjectsType» definiert ist</xs:documentation>
+						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, welches durch «nonCropObjectsType» definiert ist</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
 			<xs:element name="applicationArea" type="eCH-0261:identifierType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">ID einer georeferenzierten Anwendungs-fläche</xs:documentation>
+					<xs:documentation xml:lang="de">ID einer georeferenzierten Anwendungsfläche</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="appliedBy" type="eCH-0108:uidType">
+			<xs:element name="utilisedBy" type="eCH-0108:uidType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="applicationTechnology" type="eCH-0262:applicationTechnologyType" minOccurs="0">
+			<xs:element name="utilisationTechnology" type="eCH-0262:utilisationTechnologyType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Verwendete Anwendungstechnologie</xs:documentation>
+					<xs:documentation xml:lang="de">Verwendete Verwendungstechnologie</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="comment" minOccurs="0">
@@ -585,24 +602,29 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="feedstuffApplicationType">
+	<xs:complexType name="feedstuffUtilisationType">
 		<xs:annotation>
-			<xs:documentation xml:lang="de">Anwendung Futtermittel</xs:documentation>
+			<xs:documentation xml:lang="de">Verwendung Futtermittel</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="eCH-0261:identifierType" maxOccurs="2">
+			<xs:element name="id" type="eCH-0261:identifierType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="dateOfApplication" type="xs:date">
+			<xs:element name="alternateId" type="eCH-0261:identifierType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Datum der Anwendung</xs:documentation>
+					<xs:documentation xml:lang="de">Alternativer Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dateOfUtilisation" type="eCH-0262:dateOfUtilisationType">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Datum der Verwendung</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="product" type="eCH-0261:identifierType">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">ID eines Dünger-Produkts</xs:documentation>
+					<xs:documentation xml:lang="de">ID eines Futtermittel-Produkts</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="quantity">
@@ -664,7 +686,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="location" type="eCH-0108:localIdType">
+			<xs:element name="locationOfUtilisation" type="eCH-0108:localIdType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Standort (BUR-Nummer)</xs:documentation>
 				</xs:annotation>
@@ -680,7 +702,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 						<xs:documentation xml:lang="de">Referenz (ID) eines Tieres aus der GRUD-Liste</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="taxonomyAnimal" type="eCH-0261:identifierType">
+				<xs:element name="zoologicalAnimal" type="eCH-0261:identifierType">
 					<xs:annotation>
 						<xs:documentation xml:lang="de">Referenz (ID) eines Tieres gemäss einer Taxonomie</xs:documentation>
 					</xs:annotation>
@@ -691,14 +713,14 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
-			<xs:element name="appliedBy" type="eCH-0108:uidType">
+			<xs:element name="utilisedBy" type="eCH-0108:uidType">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
+					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt verwendet hat</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="applicationTechnology" type="eCH-0262:applicationTechnologyType" minOccurs="0">
+			<xs:element name="utilisationTechnology" type="eCH-0262:utilisationTechnologyType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Verwendete Anwendungstechnologie</xs:documentation>
+					<xs:documentation xml:lang="de">Verwendete Verwendungstechnologie</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="comment" minOccurs="0">
@@ -713,9 +735,9 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="applicationTechnologyType">
+	<xs:complexType name="utilisationTechnologyType">
 		<xs:annotation>
-			<xs:documentation xml:lang="de">Anwendungstechnologie</xs:documentation>
+			<xs:documentation xml:lang="de">Verwendungstechnologie</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="id" type="eCH-0261:identifierType" maxOccurs="2">
@@ -730,7 +752,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 			</xs:element>
 			<xs:element name="productFamily" type="eCH-0263:productFamilyType" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Gibt an, für welche Produktfamilien diese Anwendungstechnologie in Frage kommt</xs:documentation>
+					<xs:documentation xml:lang="de">Gibt an, für welche Produktfamilien diese Verwendungstechnologie in Frage kommt</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -745,15 +767,10 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="product">
+			<xs:element name="product" type="eCH-0261:identifierType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">ID des gelieferten Produkts.</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:maxLength value="50"/>
-					</xs:restriction>
-				</xs:simpleType>
 			</xs:element>
 			<xs:element name="shippedFrom" type="eCH-0108:localIdType">
 				<xs:annotation>
@@ -801,7 +818,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 			</xs:element>
 			<xs:element name="shipmentDate" type="xs:date">
 				<xs:annotation>
-					<xs:documentation xml:lang="de">Lieferdatum</xs:documentation>
+					<xs:documentation xml:lang="de">Abgangsdatum der Lieferung</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="comment" minOccurs="0">
@@ -814,7 +831,7 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="productShipmentStatus" type="eCH-0262:productShipmentStatusType">
+			<xs:element name="productShipmentStatus" type="eCH-0261:identifierType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Lieferstatus</xs:documentation>
 				</xs:annotation>
@@ -832,6 +849,23 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="item" type="eCH-0261:enumeratedItemType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="nonCropObjectsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Liste Objekte, die keiner Kultur entsprechen</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="item" type="eCH-0261:enumeratedItemType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="dateOfUtilisationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Datum der Verwendung</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="dateFrom" type="xs:date"/>
+			<xs:element name="dateTo" type="xs:date"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!--MeasurementType redefinition from eCH-0261-->
@@ -862,11 +896,6 @@ Referenziert einen Code einer Spezies, welcher durch «taxonomyAnimal» aus eCH-
 					<xs:documentation xml:lang="fr">Désignation plus précise de l'unité, si l'unité "pc" (pièce) a été indiquée dans le champ "unit".</xs:documentation>
 					<xs:documentation xml:lang="en">More precise designation of the unit if the unit "pc" (piece) was specified in the "unit" field.</xs:documentation>
 				</xs:annotation>
-				<!--				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:maxLength value="50"/>
-					</xs:restriction>
-				</xs:simpleType>-->
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
