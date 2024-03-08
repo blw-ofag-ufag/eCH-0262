@@ -742,6 +742,11 @@
 					<xs:documentation xml:lang="de">Identifikator</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="alternateId" type="eCH-0261:identifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="de">Alternativer Identifikator</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="product" type="eCH-0261:identifierType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">ID des gelieferten Produkts.</xs:documentation>
