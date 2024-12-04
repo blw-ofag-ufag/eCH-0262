@@ -7,7 +7,7 @@
 	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0261/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0261/1/eCH-0261-1-0.xsd"/>
 	<xs:import namespace="http://www.ech.ch/xmlns/eCH-0263/1" schemaLocation="http://www.ech.ch/xmlns/eCH-0263/1/eCH-0263-1-0.xsd"/>
 	<!--Hauptdatentypen-->
-	<xs:complexType name="husbandryFormType">
+	<xs:complexType name="animalHoldingFormType">
 		<xs:annotation>
 			<xs:documentation xml:lang="de">Tierhaltung</xs:documentation>
 		</xs:annotation>
@@ -22,7 +22,7 @@
 					<xs:documentation xml:lang="de">Beschreibung</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="husbandryKind">
+			<xs:element name="animalHoldingKind">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Tierhaltungsart</xs:documentation>
 				</xs:annotation>
