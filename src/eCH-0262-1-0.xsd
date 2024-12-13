@@ -268,7 +268,7 @@
 				</xs:element>
 				<xs:element name="nonCrop" type="eCH-0261:identifierType">
 					<xs:annotation>
-						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, wel-ches durch «nonCropObjectsType» definiert ist</xs:documentation>
+						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, wel-ches durch «NonCropObjectType» definiert ist</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
@@ -400,7 +400,7 @@
 				</xs:element>
 				<xs:element name="nonCrop" type="eCH-0261:identifierType">
 					<xs:annotation>
-						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, wel-ches durch «nonCropObjectsType» definiert ist</xs:documentation>
+						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, wel-ches durch «NonCropObjectType» definiert ist</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
@@ -541,7 +541,7 @@
 				</xs:element>
 				<xs:element name="nonCrop" type="eCH-0261:identifierType">
 					<xs:annotation>
-						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, welches durch «nonCropObjectsType» definiert ist</xs:documentation>
+						<xs:documentation xml:lang="de">Referenz (ID) eines Objekts, welches durch «NonCropObjectType» definiert ist</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:choice>
@@ -831,7 +831,7 @@
 			<xs:element name="item" type="eCH-0261:enumeratedItemType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="nonCropObjectsType">
+	<xs:complexType name="NonCropObjectType">
 		<xs:annotation>
 			<xs:documentation xml:lang="de">Liste Objekte, die keiner Kultur entsprechen</xs:documentation>
 		</xs:annotation>
