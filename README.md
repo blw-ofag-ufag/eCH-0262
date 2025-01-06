@@ -1,7 +1,8 @@
 # eCH-0262
 eCH-0262 -- Agrardaten - Hofdaten und Anwendung Betriebsmittel
 
-This is the repository for technical artefacts related to this specification.
+This is the repository for technical artefacts related to this specification 0262. The currently valid version is published on the eCH-Website https://www.ech.ch/de/ech/ech-0262.
+
 Primarily, this repo contains:
 
 * XSDs
