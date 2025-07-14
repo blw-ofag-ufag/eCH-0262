@@ -277,7 +277,7 @@
 					<xs:documentation xml:lang="de">ID einer georeferenzierten Anwendungsfläche</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="appliedBy" type="eCH-0108:uidType">
+			<xs:element name="utilisedBy" type="eCH-0108:uidType">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Unternehmen, welches das Produkt angewendet hat</xs:documentation>
 				</xs:annotation>
