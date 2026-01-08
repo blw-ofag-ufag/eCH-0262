@@ -88,7 +88,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="volume">
+			<xs:element name="volume" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation xml:lang="de">Volumen (m3)</xs:documentation>
 				</xs:annotation>
