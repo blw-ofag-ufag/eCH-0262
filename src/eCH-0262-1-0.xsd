@@ -38,6 +38,11 @@
 								<xs:documentation xml:lang="de">Wiese</xs:documentation>
 							</xs:annotation>
 						</xs:enumeration>
+						<xs:enumeration value="FARMYARD">
+							<xs:annotation>
+								<xs:documentation xml:lang="de">Laufhof</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
